@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{./base/base :: parent(~{::#filterStudentsClassAndAcademicYear}, ~{::#title})}"
+>
+  <head>
+    <title id="title">Filter Students</title>
+  </head>
+  <body id="filterStudentsClassAndAcademicYear">
+    <main class="p-6">
+      <div class="max-w-7xl mx-auto bg-white shadow-lg rounded-lg">
+        <div class="p-6 border-b border-gray-200 flex items-center">
+          <div>
+            <a
+              href="/"
+              type="button"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              <svg
+                class="w-4 h-4 text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="4"
+                  d="M5 12h14M5 12l4-4m-4 4 4 4"
+                />
+              </svg>
+
+              <span class="sr-only">Icon description</span>
+            </a>
+          </div>
+          <h1 class="text-2xl pb-2 font-bold mt-2">Filter Students</h1>
+        </div>
+
+        <div>
+          <div
+            class="p-6 bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+          >
+            <div class="flex lg:flex-col md:flex-row sm:flex-row gap-6">
+                <div>
+                    <label
+                      for="classSelect"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >Class:</label
+                    >
+                    <select
+                      id="classSelect"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option value="">Select Class</option>
+                      <option
+                        th:each="class : ${studentClasses}"
+                        th:value="${class.id}"
+                        th:text="${class.name}"
+                        th:selected="${class.id} == ${param.classId}"
+                      ></option>
+                    </select>
+                  </div>
+      
+                  <div>
+                    <label
+                      for="academicYearSelect"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >Academic Year:</label
+                    >
+                    <select
+                      id="academicYearSelect"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option value="">Select Academic Year</option>
+                      <option
+                        th:each="year : ${academicYears}"
+                        th:value="${year.id}"
+                        th:text="${year.name}"
+                        th:selected="${year.id} == ${param.academicYearId}"
+                      ></option>
+                    </select>
+                  </div>
+            </div>
+          </div>
+          <div class="relative overflow-x-auto sm:rounded-lg mx-5 my-5">
+            <table
+              class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+            >
+              <div id="result">
+                <!-- Filtered student data will be displayed here -->
+              </div>
+            </table>
+          </div>
+          <div
+            class="flex flex-col justify-center items-center xl:flex-row lg:flex-row pb-10"
+          >
+            <div>
+              <a
+                th:href="@{/students/add}"
+                type="button"
+                class="text-white mx-5 bg-[#1da1f2] hover:bg-[#1da1f2]/90 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 me-2 mb-2"
+              >
+                <p class="mx-1">Add New Student</p>
+                <svg
+                  class="w-6 h-6 me-2"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 12h14m-7 7V5"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const classSelect = document.getElementById("classSelect");
+        const academicYearSelect =
+          document.getElementById("academicYearSelect");
+        const resultDiv = document.getElementById("result");
+
+        // Pre-fill selections based on URL parameters
+        const params = new URLSearchParams(window.location.search);
+        const selectedClassId = params.get("classId");
+        const selectedAcademicYearId = params.get("academicYearId");
+
+        if (selectedClassId) classSelect.value = selectedClassId;
+        if (selectedAcademicYearId)
+          academicYearSelect.value = selectedAcademicYearId;
+
+        // Fetch students if classId and academicYearId exist in URL
+        if (selectedClassId && selectedAcademicYearId) {
+          fetchFilteredStudents(selectedClassId, selectedAcademicYearId);
+        }
+
+        classSelect.addEventListener("change", () => {
+          updateUrlAndFetch();
+        });
+        academicYearSelect.addEventListener("change", () => {
+          updateUrlAndFetch();
+        });
+
+        function updateUrlAndFetch() {
+          const classId = classSelect.value;
+          const academicYearId = academicYearSelect.value;
+
+          if (classId && academicYearId) {
+            const newUrl = `${window.location.pathname}?classId=${classId}&academicYearId=${academicYearId}`;
+            history.pushState(null, "", newUrl);
+            fetchFilteredStudents(classId, academicYearId);
+          } else {
+            resultDiv.innerHTML =
+              "<p class='mb-4 text-xl font-medium text-red-500 lg:text-xl dark:text-white'>Please select both Class and Academic Year.</p>";
+          }
+        }
+
+        async function fetchFilteredStudents(classId, academicYearId) {
+          if (!classId || !academicYearId) {
+            resultDiv.innerHTML =
+              "<p class='mb-4 text-xl font-medium text-red-500 lg:text-xl dark:text-white'>Please select both Class and Academic Year.</p>";
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              `/students/filter?classId=${classId}&academicYearId=${academicYearId}`
+            );
+            if (response.ok) {
+              const students = await response.json();
+
+              let tableContent = `
+                  <table border="1" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                      <tr>
+                        <th scope="col" class="px-6 py-3">Student ID</th>
+                        <th scope="col" class="px-6 py-3">First Name</th>
+                        <th scope="col" class="px-6 py-3">Last Name</th>
+                        <th scope="col" class="px-6 py-3">Date of Birth</th>
+                        <th scope="col" class="px-6 py-3">Email</th>
+                        <th scope="col" class="px-6 py-3">Student Class</th>
+                        <th scope="col" class="px-6 py-3">Section</th>
+                        <th scope="col" class="px-6 py-3">Academic Year</th>
+                        <th scope="col" class="px-6 py-3">Subject</th>
+                        <th scope="col" class="px-6 py-3">Assigned Fees</th>
+                        <th scope="col" class="px-6 py-3">Total Payments</th>
+                        <th scope="col" class="px-6 py-3">Outstanding Balance</th>
+                        <th scope="col" class="px-6 py-3">Actions</th>
+                        <th scope="col" class="px-6 py-3">Fees Management</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                `;
+              students.forEach((student) => {
+                const { startDate, endDate } = student.academicYear; // Extract academic year details
+                tableContent += `
+                    <tr class="hover:bg-gray-100">
+                      <td class="px-6 py-4 whitespace-nowrap">${student.id}</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${
+                        student.firstName
+                      }</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${
+                        student.lastName
+                      }</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${
+                        student.dateOfBirth || "N/A"
+                      }</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${
+                        student.email || "N/A"
+                      }</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${
+                        student.studentClass || "N/A"
+                      }</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${
+                        student.section || "N/A"
+                      }</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${startDate} - ${endDate}</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${
+                        student.subject || "N/A"
+                      }</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${
+                        student.assignedFees || "0.0"
+                      }</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${
+                        student.totalPayments || "0.0"
+                      }</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${
+                        student.outstandingBalance || "0.0"
+                      }</td>
+                      <td class="flex items-center px-6 py-4 actions">
+                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="/students/edit/${
+                          student.id
+                        }">Edit</a>
+                        <a class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" href="/students/delete/${
+                          student.id
+                        }" onclick="return confirm('Are you sure you want to delete this student?');">Delete</a>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="/adv-fees/list/${
+                          student.id
+                        }">Allocated Fees</a> |
+                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="/adv-fees/pay/${
+                          student.id
+                        }">Pay Fees</a> |
+                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="/adv-fees/outstanding/${
+                          student.id
+                        }">Outstanding Balance</a> |
+                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="/adv-fees/payments/${
+                          student.id
+                        }">Payment History</a>
+                      </td>
+                    </tr>
+                  `;
+              });
+              tableContent += `
+                    </tbody>
+                  </table>
+                `;
+              resultDiv.innerHTML = tableContent;
+            } else {
+              const message = await response.text();
+              resultDiv.innerHTML = `<p class='mb-4 text-xl font-medium text-red-500 lg:text-xl dark:text-white'>${message}</p>`;
+            }
+          } catch (error) {
+            resultDiv.innerHTML = `<p class='mb-4 text-xl font-medium text-red-500 lg:text-xl dark:text-white'>Error fetching students: ${error.message}</p>`;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

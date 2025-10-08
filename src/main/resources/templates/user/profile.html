@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{./base/base :: parent(~{::#profileContent}, ~{::#title})}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="title">Profile</title>
+  </head>
+  <body id="profileContent" class="bg-gray-100">
+    <main class="p-6">
+      <div class="max-w-7xl mx-auto bg-white shadow-lg rounded-lg">
+        <div class="p-6 border-b border-gray-200">
+          <h1 class="text-2xl font-bold mt-2">Profile</h1>
+        </div>
+
+        <div></div>
+
+        <div>
+          <section class="relative pt-36 pb-24">
+            <img
+              src="https://pagedone.io/asset/uploads/1705471739.png"
+              alt="cover-image"
+              class="w-full absolute top-0 left-0 z-0 h-60 object-cover"
+            />
+            <div class="w-full max-w-7xl mx-auto px-6 md:px-8">
+              <div
+                class="flex items-center justify-center relative z-10 mb-2.5"
+              >
+                <img
+                  src="https://pagedone.io/asset/uploads/1705471668.png"
+                  alt="user-avatar-image"
+                  class="border-4 border-solid border-white rounded-full object-cover"
+                />
+              </div>
+
+              <h3
+                class="text-center font-manrope font-bold text-3xl leading-10 text-gray-900 mb-3"
+              >
+                Jenny Wilson
+              </h3>
+              <p
+                class="font-normal text-base leading-7 text-gray-500 text-center mb-8"
+              >
+                A social media influencers and singer
+              </p>
+            </div>
+
+            <div
+              class="m-4 flex flex-col gap-12 justify-center"
+            >
+              <div
+                class="lg:mx-20 md:mx-12 sm:mx-4 hover-effect p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+              >
+                <div>
+                  <h5
+                    class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white border-b border-gray-300 pb-2"
+                  >
+                    Contact Information
+                  </h5>
+                </div>
+                <address class="mt-2">
+                  <div class="mb-1">
+                    <span class="font-medium text-lg text-gray-800"
+                      >Email:</span
+                    >
+                    <a
+                      href="mailto:webmaster@flowbite.com"
+                      class="text-blue-600 hover:text-blue-800"
+                      th:text="${user.email != null ? user.email : 'N/A'}"
+                      >yourname@flowbite.com</a
+                    >
+                  </div>
+
+                  <div class="mb-1">
+                    <span class="font-medium text-lg text-gray-800"
+                      >Address:</span
+                    >
+                    <span
+                      th:text="${user.address != null ? user.address : 'N/A'}"
+                    ></span>
+                  </div>
+
+                  <div class="mb-1">
+                    <span class="font-medium text-lg text-gray-800"
+                      >Phone:</span
+                    >
+                    <span
+                      th:text="${user.phoneNum != null ? user.phoneNum : 'N/A'}"
+                    ></span>
+                  </div>
+                </address>
+              </div>
+
+              <div
+                class="lg:mx-20 md:mx-12 sm:mx-4 hover-effect p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+              >
+                <div>
+                  <h5
+                    class="mb-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white border-b border-gray-300 pb-2"
+                  >
+                    General Information
+                  </h5>
+                </div>
+
+                <div>
+                  <div class="mb-4">
+                    <dl class="mt-2">
+                      <div class="flex justify-between gap-16 mb-2">
+                        <dt class="font-normal text-lg text-gray-800">Class</dt>
+                        <dd>5th</dd>
+                      </div>
+
+                      <div class="flex justify-between gap-16 mb-2">
+                        <dt class="font-normal text-lg text-gray-800">
+                          Section
+                        </dt>
+                        <dd>A</dd>
+                      </div>
+
+                      <div class="flex justify-between gap-16 mb-2">
+                        <dt class="font-normal text-lg text-gray-800">
+                          Roll Number
+                        </dt>
+                        <dd>34</dd>
+                      </div>
+
+                      <div class="flex justify-between items-center mb-2">
+                        <dt class="font-normal text-lg text-gray-800">
+                          Join Date
+                        </dt>
+                        <dd>12-09-2021</dd>
+                      </div>
+
+                      <div class="flex justify-between gap-16 mb-2">
+                        <dt class="font-normal text-lg text-gray-800">Role</dt>
+                        <dd>Student</dd>
+                      </div>
+
+                      <div class="flex justify-between items-center mb-2">
+                        <dt class="font-normal text-lg text-gray-800">
+                          Date of Brith
+                        </dt>
+                        <dd>15-08-1990</dd>
+                      </div>
+
+                      <div class="flex justify-between items-center gap-16 mb-2">
+                        <dt class="font-normal text-lg text-gray-800">
+                          Total Assigned Fee
+                        </dt>
+                        <dd>6000</dd>
+                      </div>
+
+                      <div class="flex justify-between items-center gap-16 mb-2">
+                        <dt class="font-normal text-lg text-gray-800">
+                          Total Required Fee
+                        </dt>
+                        <dd>5800</dd>
+                      </div>
+
+                      <div class="flex justify-between items-center gap-16 mb-2">
+                        <dt class="font-normal text-lg text-gray-800">
+                          Total Fee Paid
+                        </dt>
+                        <dd>200</dd>
+                      </div>
+
+                      <div class="flex justify-between items-center mb-2">
+                        <dt class="font-normal text-lg text-gray-800">
+                          Payment History
+                        </dt>
+                        <dd>Click here</dd>
+                      </div>
+
+                      <div class="flex justify-between items-center gap-16 mb-2">
+                        <dt class="font-normal text-lg text-gray-800">
+                          Transport
+                        </dt>
+                        <dd>NA</dd>
+                      </div>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

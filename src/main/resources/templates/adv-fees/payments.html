@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payment History</title>
+</head>
+<body>
+    <h1>Payment History</h1>
+    <a th:href="'/'">Home</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Payment ID</th>
+                <th>Amount</th>
+                <th>Payment Date</th>
+                <th>Receipt Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="payment : ${payments}">
+                <td th:text="${payment.id}"></td>
+                <td th:text="${payment.amount}"></td>
+                <td th:text="${payment.paymentDate}"></td>
+                <td th:text="${payment.receiptNumber}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{'/adv-fees/list/' + ${studentId}}">Back to Fee List</a>
+</body>
+</html>

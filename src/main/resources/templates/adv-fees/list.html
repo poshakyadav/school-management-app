@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{./base/base :: parent(~{::#studentAllocatedFee}, ~{::#title})}"
+>
+  <head>
+    <title id="title">Fee List</title>
+  </head>
+  <body id="studentAllocatedFee">
+    <main class="p-6">
+      <div class="max-w-7xl mx-auto bg-white shadow-lg rounded-lg">
+        <div class="p-6 border-b border-gray-200 flex items-center">
+          <div>
+            <a
+              href="/"
+              type="button"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              <svg
+                class="w-4 h-4 text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="4"
+                  d="M5 12h14M5 12l4-4m-4 4 4 4"
+                />
+              </svg>
+
+              <span class="sr-only">Icon description</span>
+            </a>
+          </div>
+          <h1 class="text-2xl pb-2 font-bold mt-2">Fee List for Student</h1>
+        </div>
+
+        <div>
+          <div
+            class="relative overflow-x-auto shadow-md sm:rounded-lg mx-5 my-5"
+          >
+            <table
+              class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+            >
+              <thead
+                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+              >
+                <tr>
+                  <th scope="col" class="px-6 py-3">ID</th>
+                  <th scope="col" class="px-6 py-3">Fee Structure</th>
+                  <th scope="col" class="px-6 py-3">Amount</th>
+                  <th scope="col" class="px-6 py-3">Discount</th>
+                  <th scope="col" class="px-6 py-3">Net Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="fee : ${fees}">
+                  <td class="px-6 py-4" th:text="${fee.id}"></td>
+                  <td
+                    class="px-6 py-4"
+                    th:text="${fee.feeStructure?.feeType ?: 'No Fee Structure'}"
+                  ></td>
+                  <td
+                    class="px-6 py-4"
+                    th:text="${fee.feeStructure?.amount ?: '0'}"
+                  ></td>
+                  <td class="px-6 py-4" th:text="${fee.discount}"></td>
+                  <td class="px-6 py-4" th:text="${fee.netAmount}"></td>
+                </tr>
+                <tr th:if="${fees.empty}">
+                  <td class="text-2xl text-center" colspan="10">
+                    No Allocated Fee found.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="flex flex-col justify-center items-center xl:flex-row lg:flex-row pb-10"
+          >
+            <div>
+              <button
+                th:href="'/adv-fees/allocate/' + ${studentId}"
+                type="button"
+                class="text-white mx-5 bg-[#1da1f2] hover:bg-[#1da1f2]/90 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 me-2 mb-2 cursor-not-allowed"
+                disabled
+              >
+                <p class="mx-1">Allocate More Fees</p>
+                <svg
+                  class="w-6 h-6 me-2"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 12h14m-7 7V5"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div>
+              <a
+                th:href="'/adv-fees/pay/' + ${studentId}"
+                type="button"
+                class="text-white mx-5 bg-[#1da1f2] hover:bg-[#1da1f2]/90 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 me-2 mb-2"
+              >
+                <p class="mx-1">Make Payment</p>
+                <svg
+                  class="w-6 h-6 me-2"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 12H5m14 0-4 4m4-4-4-4"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

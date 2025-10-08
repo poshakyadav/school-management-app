@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Teacher Form</title>
+  </head>
+  <body>
+    <h1>Add and Edit Teachers</h1>
+    <form
+      th:action="@{${teacher.id == null ? '/teachers/add' : '/teachers/edit'}}"
+      th:object="${teacher}"
+      method="post"
+    >
+      <input type="hidden" th:field="*{id}" />
+      <!-- First Name Field -->
+      <label for="username">Username:</label>
+      <input type="text" id="username" th:field="*{username}" required />
+      <br />
+      <!-- First Name Field -->
+      <label for="password">Password:</label>
+      <input type="text" id="password" th:field="*{password}" required />
+      <br />
+      <!-- Email Field -->
+      <label for="email">Email:</label>
+      <input type="email" id="email" th:field="*{email}" required />
+      <br />
+      <!--  Name Field -->
+      <label for="firstName">Name:</label>
+      <input type="text" id="firstName" th:field="*{name}" required />
+      <br />
+
+      <!-- Subject Field -->
+      <label for="subject">Subject:</label>
+      <!-- <input type="text" id="subject"  required> -->
+      <select id="subject" th:field="*{subject}">
+        <option value="" selected>-- None --</option>
+        <option
+          th:each="subject : ${subject}"
+          th:value="${subject.id}"
+          th:text="${subject.name}"
+        ></option>
+      </select>
+      <br />
+
+      <button type="submit">Save</button>
+    </form>
+    <a href="/teachers/list">Back to List</a>
+  </body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{./base/base :: parent(~{::#assignFeeForm}, ~{::#title})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="title">Assign Fee Structure</title>
+  </head>
+  <body id="assignFeeForm">
+    <main class="p-6">
+      <div class="max-w-7xl mx-auto bg-white shadow-lg rounded-lg">
+        <div
+          class="p-6 border-b border-gray-200 flex items-center justify-center"
+        >
+          <h1
+            class="text-3xl lg:text-2xl md:text-2xl sm:text-2xl pb-2 font-medium mt-2"
+          >
+            Assign Fee Structure to Class
+          </h1>
+        </div>
+
+        <div>
+          <section class="pt-10 pb-10">
+            <div>
+              <form
+                class="max-w-sm mx-auto"
+                action="/adv-fees/assign-fee-structure"
+                method="post"
+              >
+                <div class="mb-5">
+                  <label
+                    for="classId"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Select Class:</label
+                  >
+                  <select
+                    name="classId"
+                    id="classId"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  >
+                    <option value="" selected>--Select Class--</option>
+                    <th:block th:each="class : ${classes}">
+                      <option
+                        th:value="${class.id}"
+                        th:text="${class.name}"
+                      ></option>
+                    </th:block>
+                  </select>
+                </div>
+
+                <!-- Display Class Academic Year -->
+                <div class="mb-5">
+                  <label
+                    for="classAcademicYear"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Class Academic Year:</label
+                  >
+                  <input
+                    type="text"
+                    id="classAcademicYear"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    readonly
+                  />
+                </div>
+
+                <div class="mb-5">
+                  <label
+                    for="feeStructureId"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Select Fee Structure:</label
+                  >
+                  <select
+                    name="feeStructureId"
+                    id="feeStructureId"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  >
+                  <option value="" selected>--Select Fee Structure--</option>
+                    <th:block th:each="feeStructure : ${feeStructures}">
+                      <option
+                        th:value="${feeStructure.id}"
+                        th:text="${feeStructure.feeType}"
+                      ></option>
+                    </th:block>
+                  </select>
+                </div>
+
+                <!-- Display Fee Structure Academic Year -->
+                <div class="mb-5">
+                  <label
+                    for="feeStructureAcademicYear"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Fee Structure Academic Year:</label
+                  >
+                  <input
+                    type="text"
+                    id="feeStructureAcademicYear"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    readonly
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Assign Fee Structure
+                </button>
+              </form>
+
+              <div class="flex justify-center items-center pt-10">
+                <a
+                  th:href="@{/adv-fees/list-fee-structures}"
+                  type="button"
+                  class="text-white bg-[#1da1f2] hover:bg-[#1da1f2]/90 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 me-2 mb-2 pt-3 border-t-2 border-gray-800"
+                >
+                  <svg
+                    class="w-6 h-6 me-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 12h14M5 12l4-4m-4 4 4 4"
+                    />
+                  </svg>
+
+                  Back to List
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- <script>
+      document
+        .getElementById("classId")
+        .addEventListener("change", function () {
+          const classId = this.value;
+          console.log("Fetching.. class academic year");
+          fetch(`/adv-fees/class-academic-year/${classId}`)
+            .then((response) => response.text())
+            .then((data) => {
+              document.getElementById("classAcademicYear").value = data;
+            });
+        });
+
+      document
+        .getElementById("feeStructureId")
+        .addEventListener("change", function () {
+          const feeStructureId = this.value;
+          console.log("Fetching.. fee structure academic year");
+          fetch(`/adv-fees/fee-structure-academic-year/${feeStructureId}`)
+            .then((response) => response.text())
+            .then((data) => {
+              document.getElementById("feeStructureAcademicYear").value = data;
+            });
+        });
+    </script> -->
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("Script loaded successfully");
+  
+        // Handle Class Academic Year
+        document
+          .getElementById("classId")
+          .addEventListener("change", function () {
+            const classId = this.value;
+            console.log("Fetching.. class academic year for classId:", classId);
+            fetch(`/adv-fees/class-academic-year/${classId}`)
+              .then((response) => response.text())
+              .then((data) => {
+                console.log("Class Academic Year fetched:", data);
+                document.getElementById("classAcademicYear").value = data;
+              })
+              .catch((error) => {
+                console.error("Error fetching Class Academic Year:", error);
+              });
+          });
+  
+        // Handle Fee Structure Academic Year
+        document
+          .getElementById("feeStructureId")
+          .addEventListener("change", function () {
+            const feeStructureId = this.value;
+            console.log(
+              "Fetching.. fee structure academic year for feeStructureId:",
+              feeStructureId
+            );
+            fetch(`/adv-fees/fee-structure-academic-year/${feeStructureId}`)
+              .then((response) => response.text())
+              .then((data) => {
+                console.log("Fee Structure Academic Year fetched:", data);
+                document.getElementById("feeStructureAcademicYear").value = data;
+              })
+              .catch((error) => {
+                console.error("Error fetching Fee Structure Academic Year:", error);
+              });
+          });
+      });
+    </script>
+  
+  </body>
+</html>

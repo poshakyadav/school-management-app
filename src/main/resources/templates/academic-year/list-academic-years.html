@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Academic Years</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Manage Academic Years</h1>
+
+    <a href="/academic-year/create" class="btn btn-primary">Add New Academic Year</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="year : ${academicYears}">
+                <td th:text="${year.id}"></td>
+                <td th:text="${year.startDate}"></td>
+                <td th:text="${year.endDate}"></td>
+                <td th:text="${year.isActive ? 'Yes' : 'No'}"></td>
+                <td>
+                    <form th:action="@{/academic-year/activate/{id}(id=${year.id})}" method="post">
+                        <button type="submit" th:disabled="${year.isActive}" class="btn btn-success">Activate</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Grade Report</title>
+</head>
+<body>
+    <h2>Grade Report</h2>
+    <form th:action="@{/grades/report}" method="get">
+        <label>Student:</label>
+        <select name="studentId">
+            <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
+        </select>
+        <label>Course:</label>
+        <select name="courseId">
+            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+        </select>
+        <button type="submit">Generate Report</button>
+    </form>
+    <div th:if="${report != null}">
+        <h3>Report Details</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="grade : ${report}">
+                    <td th:text="${grade.student.name}"></td>
+                    <td th:text="${grade.course.name}"></td>
+                    <td th:text="${grade.grade}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

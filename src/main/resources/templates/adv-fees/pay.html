@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Make Payment</title>
+</head>
+<body>
+    <h1>Make Payment for Student</h1>
+    <a th:href="'/'">Home</a>
+    <form th:action="@{/adv-fees/pay}" method="post">
+        <input type="hidden" name="studentId" th:value="${studentId}" />
+        <label for="amount">Enter Payment Amount:</label>
+        <input type="number" id="amount" name="amount" min="0" required>
+        <br>
+        <button type="submit">Pay</button>
+    </form>
+    <a th:href="@{'/adv-fees/list/' + ${studentId}}">Back to Fee List</a>
+</body>
+</html>

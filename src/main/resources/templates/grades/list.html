@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Grades List</title>
+</head>
+<body>
+    <h2>Grades</h2>
+    <a href="/grades/add">Add Grade</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Course</th>
+                <th>Grade</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="grade : ${grades}">
+                <td th:text="${grade.student.name}"></td>
+                <td th:text="${grade.course.name}"></td>
+                <td th:text="${grade.grade}"></td>
+                <td>
+                    <a th:href="@{/grades/edit/{id}(id=${grade.id})}">Edit</a>
+                    <a th:href="@{/grades/delete/{id}(id=${grade.id})}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Schedule</title>
+</head>
+<body>
+    <h2 th:text="${schedule.id == null ? 'Add' : 'Edit'} + ' Schedule'"></h2>
+    <form th:action="@{/schedules/add}" th:object="${schedule}" method="post">
+        <label>Course:</label>
+        <select th:field="*{course}" required>
+            <option th:each="course : ${courses}" th:value="${course}" th:text="${course.name}"></option>
+        </select>
+        <label>Teacher:</label>
+        <select th:field="*{teacher}" required>
+            <option th:each="teacher : ${teachers}" th:value="${teacher}" th:text="${teacher.name}"></option>
+        </select>
+        <label>Classroom:</label>
+        <input type="text" th:field="*{classroom}" required />
+        <label>Timing:</label>
+        <input type="text" th:field="*{timing}" required />
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

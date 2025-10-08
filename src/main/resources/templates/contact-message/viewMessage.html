@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{./base/base :: parent(~{::#userContactMessages}, ~{::#title})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="title">Message Details</title>
+  </head>
+  <body id="userContactMessages">
+    <main class="p-6">
+      <div class="max-w-7xl mx-auto bg-white shadow-lg rounded-lg">
+        <div class="p-6 border-b border-gray-200 flex items-center">
+          <div>
+            <a
+              href="/"
+              type="button"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              <svg
+                class="w-4 h-4 text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="4"
+                  d="M5 12h14M5 12l4-4m-4 4 4 4"
+                />
+              </svg>
+
+              <span class="sr-only">Icon description</span>
+            </a>
+          </div>
+          <h1 class="text-2xl pb-2 font-bold mt-2">User Message Details</h1>
+        </div>
+
+        <div>
+          <section>
+            <div class="mt-6 xl:mx-20 lg:mx-16 md:mx-6 sm:mx-1">
+              <div
+                class="relative flex flex-col rounded-lg bg-white shadow-sm border border-slate-200"
+              >
+                <nav class="flex min-w-[240px] flex-col gap-1 p-1.5">
+                  <div
+                    role="button"
+                    class="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+                  >
+                    <strong>Name:</strong>
+                    <div
+                      class="ml-auto grid place-items-center justify-self-end"
+                    >
+                      <span
+                        th:text="${message.firstName} + ' ' + ${message.lastName}"
+                      ></span>
+                    </div>
+                  </div>
+
+                  <div
+                    role="button"
+                    class="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+                  >
+                    <strong>Email:</strong>
+                    <div
+                      class="ml-auto grid place-items-center justify-self-end"
+                    >
+                      <span th:text="${message.email}"></span>
+                    </div>
+                  </div>
+
+                  <div
+                    role="button"
+                    class="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+                  >
+                    <strong>Phone:</strong>
+                    <div
+                      class="ml-auto grid place-items-center justify-self-end"
+                    >
+                      <span th:text="${message.phoneNumber}"></span>
+                    </div>
+                  </div>
+
+                  <div
+                    role="button"
+                    class="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+                  >
+                    <strong>Preferred Contact Method:</strong>
+                    <div
+                      class="ml-auto grid place-items-center justify-self-end"
+                    >
+                      <span th:text="${message.contactMethod}"></span>
+                    </div>
+                  </div>
+
+                  <div
+                    role="button"
+                    class="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+                  >
+                    <strong>Inquiry Type:</strong>
+                    <div
+                      class="ml-auto grid place-items-center justify-self-end"
+                    >
+                      <span th:text="${message.inquiryType}"></span>
+                    </div>
+                  </div>
+
+                  <div
+                    role="button"
+                    class="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+                  >
+                    <strong>Message:</strong>
+                    <div
+                      class="ml-auto grid place-items-center justify-self-end"
+                    >
+                      <p th:text="${message.message}"></p>
+                    </div>
+                  </div>
+
+                  <div
+                    role="button"
+                    class="text-slate-800 flex w-full items-center rounded-md p-2 pl-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
+                  >
+                    <strong>Status:</strong>
+                    <div
+                      class="ml-auto grid place-items-center justify-self-end"
+                    >
+                      <span
+                        th:text="${message.replied ? 'Resolved' : 'Pending'}"
+                      ></span>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+            </div>
+
+            <div class="mt-6 pb-8 xl:mx-20 lg:mx-16 md:mx-6 sm:mx-1">
+              <a href="/contact/messages" class="text-blue-700 ">Back to Messages Dashboard</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

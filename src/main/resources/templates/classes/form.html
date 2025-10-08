@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{./base/base :: parent(~{::#classForm}, ~{::#title})}"
+>
+  <head>
+    <title id="title">Class Form</title>
+  </head>
+  <body id="classForm">
+    <main class="p-6">
+      <div class="max-w-7xl mx-auto bg-white shadow-lg rounded-lg">
+        <div
+          class="p-6 border-b border-gray-200 flex items-center justify-center"
+        >
+          <h1
+            class="text-3xl lg:text-2xl md:text-2xl sm:text-2xl pb-2 font-medium mt-2"
+            th:text="${studentClass.id != null ? 'Edit Class' : 'Add Class'}"
+          >
+            Add/Edit Classes
+          </h1>
+        </div>
+
+        <div>
+          <section class="pt-10 pb-10">
+            <div>
+              <form
+                class="max-w-sm mx-auto"
+                th:object="${studentClass}"
+                th:action="@{${studentClass.id == null ? '/classes/add' : '/classes/edit'}}"
+                method="post"
+              >
+                <input type="hidden" th:field="*{id}" />
+
+                <!-- class name -->
+                <div class="mb-5">
+                  <label
+                    for="name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Class Name:</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    th:value="${studentClass.name}"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                    placeholder="Enter class name, like- 1A, 1B, 2A, 2B, etc"
+                    required
+                  />
+                </div>
+
+                <!-- room number -->
+                <div class="mb-5">
+                  <label
+                    for="roomNumber"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Room Number:</label
+                  >
+                  <input
+                    type="text"
+                    id="roomNumber"
+                    name="roomNumber"
+                    th:value="${studentClass.roomNumber}"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                    placeholder="Enter room number"
+                    required
+                  />
+                </div>
+
+                <!-- Academic Year -->
+                <div class="mb-5">
+                  <label
+                    for="academicYear"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Academic Year:</label
+                  >
+                  <select
+                    id="academicYear"
+                    name="academicYear"
+                    th:field="*{academicYear}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option value="" selected>
+                      -- Select Academic Year --
+                    </option>
+                    <option
+                    class=""
+                      th:each="academicYear : ${academicYears}"
+                      th:value="${academicYear.id}"
+                      th:text="${academicYear.startDate} + ' - ' + ${academicYear.endDate}"
+                      th:classappend="${academicYear.isActive} ? 'text-green-700 font-medium' : ''"
+                    >
+                    
+                  </option>
+                  </select>
+                </div>
+
+                <div class="mb-5">
+                  <label
+                    for="description"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Description:</label
+                  >
+                  <textarea
+                    id="description"
+                    name="description"
+                    th:text="${studentClass.description}"
+                    placeholder="Write class description here......."
+                    rows="4"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  ></textarea>
+                </div>
+
+                <div class="mb-5">
+                  <label
+                    for="sections"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Sections:</label
+                  >
+                  <select
+                    id="sections"
+                    name="sections"
+                    th:field="*{sections}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option value="" selected>-- None --</option>
+                    <option
+                      th:each="sections : ${sections}"
+                      th:value="${sections.id}"
+                      th:text="${sections.name}"
+                    ></option>
+                  </select>
+                </div>
+
+                <button
+                  type="submit"
+                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Save
+                </button>
+              </form>
+
+              <div class="flex justify-center items-center pt-10">
+                <a
+                  th:href="@{/classes/list}"
+                  type="button"
+                  class="text-white bg-[#1da1f2] hover:bg-[#1da1f2]/90 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 me-2 mb-2 pt-3 border-t-2 border-gray-800"
+                >
+                  <svg
+                    class="w-6 h-6 me-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 12h14M5 12l4-4m-4 4 4 4"
+                    />
+                  </svg>
+
+                  Back to List
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

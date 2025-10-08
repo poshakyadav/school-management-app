@@ -1,0 +1,693 @@
+<div>
+  <nav id="navbar" th:fragment="dashboardNavbar">
+    <!-- Open Button (visible on all screen sizes) -->
+    <button id="openSidebarBtn" class="p-4 fixed z-50">
+      <span class="text-2xl">☰</span>
+    </button>
+
+    <!-- Sidebar -->
+    <div
+      id="sidebar"
+      class="fixed inset-0 bg-gray-100 bg-opacity-75 z-50 transform -translate-x-full w-72 transition-transform duration-200"
+    >
+      <!-- Menu and Close button -->
+      <div
+        class="flex justify-between items-center p-4 bg-gray-200 text-gray-900 font-medium"
+      >
+        <h2 class="text-lg">Menu</h2>
+        <!-- Close Button -->
+        <button id="closeSidebarBtn" class="text-xl">
+          <svg
+            class="h-5 w-5 text-gray-900 font-medium"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="overflow-y-auto" style="height: 95%">
+        <ul class="p-4">
+          <!-- Dashboard -->
+          <li>
+            <button
+              type="button"
+              class="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-gray-200 text-gray-900"
+              aria-controls="dashboard-dropdown-example"
+              data-collapse-toggle="dashboard-dropdown-example"
+            >
+              <svg
+                class="w-6 h-6 text-gray-600 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M13.5 2c-.178 0-.356.013-.492.022l-.074.005a1 1 0 0 0-.934.998V11a1 1 0 0 0 1 1h7.975a1 1 0 0 0 .998-.934l.005-.074A7.04 7.04 0 0 0 22 10.5 8.5 8.5 0 0 0 13.5 2Z"
+                />
+                <path
+                  d="M11 6.025a1 1 0 0 0-1.065-.998 8.5 8.5 0 1 0 9.038 9.039A1 1 0 0 0 17.975 13H11V6.025Z"
+                />
+              </svg>
+
+              <span
+                class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap"
+                >Dashboard</span
+              >
+              <svg
+                class="w-3 h-3 transition-transform"
+                th:classappend="${activeDropdown == 'dashboard' ? 'rotate-180' : 'rotate-0'}"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <ul
+              id="dashboard-dropdown-example"
+              class=""
+              th:class="${activeDropdown == 'dashboard' ? '' : 'hidden'}"
+            >
+              <li>
+                <a
+                  href="/dashboard"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/dashboard' ? 'active' : ''}"
+                  >Your Dashboard</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <!-- Student Classes -->
+          <li>
+            <button
+              type="button"
+              class="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-gray-200 text-gray-900"
+              aria-controls="classes-dropdown-example"
+              data-collapse-toggle="classes-dropdown-example"
+            >
+              <svg
+                class="w-6 h-6 text-gray-600 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 4h12M6 4v16M6 4H5m13 0v16m0-16h1m-1 16H6m12 0h1M6 20H5M9 7h1v1H9V7Zm5 0h1v1h-1V7Zm-5 4h1v1H9v-1Zm5 0h1v1h-1v-1Zm-3 4h2a1 1 0 0 1 1 1v4h-4v-4a1 1 0 0 1 1-1Z"
+                />
+              </svg>
+
+              <span
+                class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap"
+                >Classes & Sections</span
+              >
+              <svg
+                class="w-3 h-3 transition-transform"
+                th:classappend="${activeDropdown == 'classAndSection' ? 'rotate-180' : 'rotate-0'}"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <ul
+              id="classes-dropdown-example"
+              class="hidden"
+              th:class="${activeDropdown == 'classAndSection' ? '' : 'hidden'}"
+            >
+              <li>
+                <a
+                  href="/sections/list"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/sections/list' ? 'active' : ''}"
+                  >See Section List</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/sections/add"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/sections/add' ? 'active' : ''}"
+                  >Add New Section</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/classes/list"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/classes/list' ? 'active' : ''}"
+                  >See Classes List</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/classes/add"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/classes/add' ? 'active' : ''}"
+                  >Add New Classes</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <!-- Fee Structure -->
+          <li>
+            <button
+              type="button"
+              class="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-gray-200 text-gray-900"
+              aria-controls="fee-dropdown-example"
+              data-collapse-toggle="fee-dropdown-example"
+            >
+              <svg
+                class="w-6 h-6 text-gray-600 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2v-4a3 3 0 0 0-3-3H7V6Z"
+                  clip-rule="evenodd"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M2 11a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7Zm7.5 1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"
+                  clip-rule="evenodd"
+                />
+                <path d="M10.5 14.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
+              </svg>
+
+              <span
+                class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap"
+                >Fee Structure</span
+              >
+              <svg
+                class="w-3 h-3 transition-transform"
+                th:classappend="${activeDropdown == 'feeStructure' ? 'rotate-180' : 'rotate-0'}"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <ul
+              id="fee-dropdown-example"
+              class="hidden"
+              th:class="${activeDropdown == 'feeStructure' ? '' : 'hidden'}"
+            >
+              <li>
+                <a
+                  href="/adv-fees/list-fee-structures"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/adv-fees/list-fee-structures' ? 'active' : ''}"
+                  >See Fee Structure List</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/adv-fees/assign-fee-structure"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/adv-fees/assign-fee-structure' ? 'active' : ''}"
+                  >Assign Fee Structure</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/adv-fees/add-fee-structure"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/adv-fees/add-fee-structure' ? 'active' : ''}"
+                  >Add New Fee Structure</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <!-- Students -->
+          <li>
+            <button
+              type="button"
+              class="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-gray-200 text-gray-900"
+              aria-controls="students-dropdown-example"
+              data-collapse-toggle="students-dropdown-example"
+            >
+              <svg
+                class="w-6 h-6 text-gray-600"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7 2a2 2 0 0 0-2 2v1a1 1 0 0 0 0 2v1a1 1 0 0 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H7Zm3 8a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm-1 7a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3 1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+
+              <span
+                class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap"
+                >Students</span
+              >
+              <svg
+                class="w-3 h-3 transition-transform"
+                th:classappend="${activeDropdown == 'students' ? 'rotate-180' : 'rotate-0'}"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <ul
+              id="students-dropdown-example"
+              class="hidden"
+              th:class="${activeDropdown == 'students' ? '' : 'hidden'}"
+            >
+              <li>
+                <a
+                  href="/students/filter-page"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/students/filter-page' ? 'active' : ''}"
+                  >Filter Students</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/students/list"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/students/list' ? 'active' : ''}"
+                  >See all Students List</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/students/add"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/students/add' ? 'active' : ''}"
+                  >Add new Student</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/grades/list"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/grades/list' ? 'active' : ''}"
+                  >See Students Grades</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/grades/add"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/grades/add' ? 'active' : ''}"
+                  >Add Grades</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/students/promotion"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/promotion' ? 'active' : ''}"
+                  >Promote Students</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <!-- Teachers -->
+          <li>
+            <button
+              type="button"
+              class="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-gray-200 text-gray-900"
+              aria-controls="teacher-dropdown-example"
+              data-collapse-toggle="teacher-dropdown-example"
+            >
+              <svg
+                class="w-6 h-6 text-gray-600"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+
+              <span
+                class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap"
+                >Teachers</span
+              >
+              <svg
+                class="w-3 h-3 transition-transform"
+                th:classappend="${activeDropdown == 'teachers' ? 'rotate-180' : 'rotate-0'}"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <ul
+              id="teacher-dropdown-example"
+              class="hidden"
+              th:class="${activeDropdown == 'teachers' ? '' : 'hidden'}"
+            >
+              <li>
+                <a
+                  href="/teachers/list"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/teachers/list' ? 'active' : ''}"
+                  >See Teachers List</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/teachers/add"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/teachers/add' ? 'active' : ''}"
+                  >Add new Teacher</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <!-- Students Subject /Cources -->
+          <li>
+            <button
+              type="button"
+              class="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-gray-200 text-gray-900"
+              aria-controls="subjects-dropdown-example"
+              data-collapse-toggle="subjects-dropdown-example"
+            >
+              <svg
+                class="w-6 h-6 text-gray-600 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+
+              <span
+                class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap"
+                >Students Subject</span
+              >
+              <svg
+                class="w-3 h-3 transition-transform"
+                th:classappend="${activeDropdown == 'subject' ? 'rotate-180' : 'rotate-0'}"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <ul
+              id="subjects-dropdown-example"
+              class="hidden"
+              th:class="${activeDropdown == 'subject' ? '' : 'hidden'}"
+            >
+              <li>
+                <a
+                  href="/courses/list"
+                  class="flex items-center w-full text-sm p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  >See Courses List</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/courses/add"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  >Add new Cources</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <!-- Schedule -->
+          <li>
+            <button
+              type="button"
+              class="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-gray-200 text-gray-900"
+              aria-controls="schedule-dropdown-example"
+              data-collapse-toggle="schedule-dropdown-example"
+            >
+              <svg
+                class="w-6 h-6 text-gray-600 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+
+              <span
+                class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap"
+                >Schedule</span
+              >
+              <svg
+                class="w-3 h-3 transition-transform"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <ul id="schedule-dropdown-example" class="hidden">
+              <li>
+                <a
+                  href="/schedules/list"
+                  class="flex items-center text-sm w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  >See Schedule</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/schedules/add"
+                  class="flex items-center text-sm w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  >Add new Schedule</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <!-- Contact Messages -->
+          <li>
+            <button
+              type="button"
+              class="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-gray-200 text-gray-900"
+              aria-controls="contact-dropdown-example"
+              data-collapse-toggle="contact-dropdown-example"
+            >
+              <svg
+                class="w-6 h-6 text-gray-600 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h1v2a1 1 0 0 0 1.707.707L9.414 13H15a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4Z"
+                  clip-rule="evenodd"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M8.023 17.215c.033-.03.066-.062.098-.094L10.243 15H15a3 3 0 0 0 3-3V8h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-1v2a1 1 0 0 1-1.707.707L14.586 18H9a1 1 0 0 1-.977-.785Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+
+              <span
+                class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap"
+                >Enquiry Messages</span
+              >
+              <svg
+                class="w-3 h-3 transition-transform"
+                th:classappend="${activeDropdown == 'contact' ? 'rotate-180' : 'rotate-0'}"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <ul
+              id="contact-dropdown-example"
+              class=""
+              th:class="${activeDropdown == 'contact' ? '' : 'hidden'}"
+            >
+              <li>
+                <a
+                  href="/contact/messages"
+                  class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200"
+                  th:classappend="${activePage == '/contact/messages' ? 'active' : ''}"
+                  >See Contact Messages</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <!-- Logout -->
+          <li class="mb-20">
+            <a
+              href="/user-logout"
+              class="flex items-center w-full p-2 text-base font-medium transition duration-75 rounded-lg group hover:bg-gray-200 text-red-600"
+            >
+              <svg
+                class="w-6 h-6 text-red-600"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"
+                />
+              </svg>
+
+              <span
+                class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap"
+                >Logout</span
+              >
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const buttons = document.querySelectorAll(
+          "button[data-collapse-toggle]"
+        );
+
+        buttons.forEach((button) => {
+          const dropdownId = button.getAttribute("aria-controls");
+          const dropdown = document.getElementById(dropdownId);
+          const arrow = button.querySelector("svg:last-child"); // The arrow icon
+
+          button.addEventListener("click", () => {
+            // Toggle visibility of the dropdown
+            if (dropdown.classList.contains("hidden")) {
+              dropdown.classList.remove("hidden");
+              arrow.style.transform = "rotate(180deg)"; // Arrow up
+            } else {
+              dropdown.classList.add("hidden");
+              arrow.style.transform = "rotate(0deg)"; // Arrow down
+            }
+          });
+        });
+      });
+    </script>
+  </nav>
+</div>

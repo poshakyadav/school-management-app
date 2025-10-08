@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{./base/base :: parent(~{::#promotionPage}, ~{::#title})}"
+>
+  <head>
+    <title id="title">Promote Students</title>
+  </head>
+  <body id="promotionPage">
+    <main class="p-6">
+      <div class="max-w-7xl mx-auto bg-white shadow-lg rounded-lg">
+        <div class="p-6 mb-4 border-b border-gray-200 flex items-center">
+          <div>
+            <a
+              href="/"
+              type="button"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              <svg
+                class="w-4 h-4 text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="4"
+                  d="M5 12h14M5 12l4-4m-4 4 4 4"
+                />
+              </svg>
+              <span class="sr-only">Icon description</span>
+            </a>
+          </div>
+          <h1 class="text-2xl pb-2 font-bold mt-2">Promote Students</h1>
+        </div>
+        <div class="flex justify-center items-center">
+          <!-- Error Message Container -->
+          <div id="errorMessageContainer" style="color: red; padding: 10px; display: none;"></div>
+
+        </div>
+        <div>
+          <div>
+            <div>
+              <div th:if="${error}" style="color: red">
+                <p th:text="${error}"></p>
+              </div>
+
+              <div th:if="${message}" style="color: green">
+                <p th:text="${message}"></p>
+              </div>
+            </div>
+
+            <div>
+              <form
+                th:action="@{/api/student-promotion/promote}"
+                method="post"
+                onsubmit="return validateForm();"
+              >
+                <div class="relative overflow-x-auto sm:rounded-lg px-2">
+                  <div
+                    class="flex flex-row sm:gap-4 md:gap-6 lg:gap-10 xl:gap-12"
+                  >
+                    <div>
+                      <h2
+                        class="sm:text-sm md:text-lg lg:text-xl xl:text-xl font-medium dark:text-white pb-4 px-2"
+                      >
+                        Select Source Class and Academic Year
+                      </h2>
+                      <div class="pb-2 px-2">
+                        <select
+                          id="sourceClass"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required
+                        >
+                          <option value="" disabled selected>
+                            -- Select Class --
+                          </option>
+                          <option
+                            th:each="class : ${classes}"
+                            th:value="${class.id}"
+                            th:text="${class.name}"
+                          ></option>
+                        </select>
+                      </div>
+
+                      <div class="pb-2 px-2">
+                        <select
+                          id="sourceAcademicYear"
+                          class="text-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required
+                        >
+                          <option value="" disabled selected>
+                            -- Select Academic Year --
+                          </option>
+                          <option
+                            th:each="year : ${academicYears}"
+                            th:value="${year.id}"
+                            th:text="${year.startDate} + ' - ' + ${year.endDate}"
+                          ></option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h2
+                        class="sm:text-sm md:text-lg lg:text-xl xl:text-xl font-medium dark:text-white pb-4 px-2"
+                      >
+                        Select Target Class and Academic Year
+                      </h2>
+                      <div class="pb-2 px-2">
+                        <select
+                          name="nextClassId"
+                          class="bg-gray-50 text-sm border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required
+                        >
+                          <option value="" disabled selected>
+                            -- Select Class --
+                          </option>
+                          <option
+                            th:each="class : ${classes}"
+                            th:value="${class.id}"
+                            th:text="${class.name}"
+                          ></option>
+                        </select>
+                      </div>
+
+                      <div class="pb-2 px-2">
+                        <select
+                          name="nextAcademicYearId"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required
+                        >
+                          <option value="" disabled selected>
+                            -- Select Academic Year --
+                          </option>
+                          <option
+                            th:each="year : ${academicYears}"
+                            th:value="${year.id}"
+                            th:text="${year.startDate} + ' - ' + ${year.endDate}"
+                          ></option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h2
+                    class="p-2 sm:text-sm md:text-lg lg:text-lg xl:text-xl font-medium"
+                  >
+                    Select Students to Promote
+                  </h2>
+
+                  <div class="relative overflow-x-auto sm:rounded-lg p-2">
+                    <div id="studentsTableContainer"></div>
+                  </div>
+                </div>
+
+                <div class="px-4 py-4 flex justify-center items-center">
+                  <button
+                    type="submit"
+                    class="text-white mx-5 bg-[#1da1f2] hover:bg-[#1da1f2]/90 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 me-2 mb-2"
+                  >
+                    Promote Selected Students
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const sourceClass = document.getElementById("sourceClass");
+        const sourceAcademicYear =
+          document.getElementById("sourceAcademicYear");
+        const studentsTableContainer = document.getElementById(
+          "studentsTableContainer"
+        );
+
+        sourceClass.addEventListener("change", fetchStudents);
+        sourceAcademicYear.addEventListener("change", fetchStudents);
+
+        async function fetchStudents() {
+          const sourceClassId = sourceClass.value;
+          const sourceAcademicYearId = sourceAcademicYear.value;
+
+          if (sourceClassId && sourceAcademicYearId) {
+            try {
+              const response = await fetch(
+                `/api/student-promotion/fetch-students?classId=${sourceClassId}&academicYearId=${sourceAcademicYearId}`
+              );
+
+              if (!response.ok) {
+                throw new Error("Failed to fetch students.");
+              }
+
+              const students = await response.json();
+
+              if (students.length > 0) {
+                let tableContent = `
+                  <table id="studentsTable" border="1" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                      <tr>
+
+                        <th class="w-4 p-4">
+                          <div class="flex items-center">
+                            <input id="selectAllCheckbox" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-200 border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                            <label for="selectAllCheckbox" class="sr-only">Select All</label>
+                          </div>
+                        </th>
+
+                        <th scope="col" class="px-6 py-3">Student ID</th>
+                        <th scope="col" class="px-6 py-3">First Name</th>
+                        <th scope="col" class="px-6 py-3">Last Name</th>
+                        <th scope="col" class="px-6 py-3">Class</th>
+                        <th scope="col" class="px-6 py-3">Section</th>
+                        <th scope="col" class="px-6 py-3">Academic Year</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                `;
+
+                students.forEach((student) => {
+                  tableContent += `
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td class="w-4 p-4">
+                          <div class="flex items-center">
+                              <input type="checkbox" id="checkbox-table-search-1" name="studentIds" value="${student.id}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                              <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4">${student.id}</td>
+                      <td class="px-6 py-4">${student.firstName}</td>
+                      <td class="px-6 py-4">${student.lastName}</td>
+                      <td class="px-6 py-4">${student.className}</td>
+                      <td class="px-6 py-4">${student.sectionName}</td>
+                      <td class="px-6 py-4 whitespace-nowrap">${student.academicYear}</td>
+                    </tr>
+                  `;
+                });
+
+                tableContent += `</tbody></table>`;
+                studentsTableContainer.innerHTML = tableContent;
+
+                const selectAllCheckbox =
+                  document.getElementById("selectAllCheckbox");
+                const studentCheckboxes = document.querySelectorAll(
+                  'input[name="studentIds"]'
+                );
+
+                // "Select All" functionality
+                selectAllCheckbox.addEventListener("change", function () {
+                  studentCheckboxes.forEach((checkbox) => {
+                    checkbox.checked = this.checked;
+                  });
+                });
+
+                // Individual checkbox update for "Select All"
+                studentCheckboxes.forEach((checkbox) => {
+                  checkbox.addEventListener("change", function () {
+                    if (!this.checked) {
+                      selectAllCheckbox.checked = false;
+                    } else if (
+                      Array.from(studentCheckboxes).every((cb) => cb.checked)
+                    ) {
+                      selectAllCheckbox.checked = true;
+                    }
+                  });
+                });
+              } else {
+                studentsTableContainer.innerHTML = `<p class="text-red-600 font-medium">No students found for the selected class and academic year.</p>`;
+              }
+            } catch (error) {
+              console.error(error);
+              studentsTableContainer.innerHTML = `<p class="text-red-600 font-medium">Error fetching students. Please try again later.</p>`;
+            }
+          } else {
+            studentsTableContainer.innerHTML = "";
+          }
+        }
+
+
+
+
+        const form = document.querySelector("form");
+        const errorMessageContainer = document.getElementById(
+          "errorMessageContainer"
+        );
+
+        form.addEventListener("submit", function (event) {
+          const selectedStudents = document.querySelectorAll(
+            'input[name="studentIds"]:checked'
+          );
+
+          // Clear previous error message
+          errorMessageContainer.style.display = "none"; // Hide the container initially
+          errorMessageContainer.innerHTML = ""; // Clear any existing message
+
+          if (selectedStudents.length === 0) {
+            // Show error message
+            errorMessageContainer.innerHTML =
+              "Please select at least one student to promote.";
+            errorMessageContainer.style.display = "block"; // Display the container
+            event.preventDefault(); // Prevent form submission
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

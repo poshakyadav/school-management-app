@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact-us</title>
+    <link rel="stylesheet" th:href="@{'/css/output.css'}" />
+  </head>
+  <body>
+    <div>
+      <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+        <div
+          class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
+          aria-hidden="true"
+        >
+          <div
+            class="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]"
+            style="
+              clip-path: polygon(
+                74.1% 44.1%,
+                100% 61.6%,
+                97.5% 26.9%,
+                85.5% 0.1%,
+                80.7% 2%,
+                72.5% 32.5%,
+                60.2% 62.4%,
+                52.4% 68.1%,
+                47.5% 58.3%,
+                45.2% 34.5%,
+                27.5% 76.7%,
+                0.1% 64.9%,
+                17.9% 100%,
+                27.6% 76.8%,
+                76.1% 97.7%,
+                74.1% 44.1%
+              );
+            "
+          ></div>
+        </div>
+        <div class="mx-auto max-w-2xl text-center">
+          <h2
+            class="text-balance mb-6 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl"
+          >
+            Contact Us
+          </h2>
+          <p class="mt-2 text-lg/8 text-gray-600">
+            Looking to join our school? Whether you're a student seeking
+            admission, an educator aspiring to teach, or have other queries,
+            reach out to us today. We're here to assist you!
+          </p>
+        </div>
+        <form
+          action="/contact/submitContactForm"
+          method="POST"
+          class="mx-auto mt-16 max-w-xl sm:mt-20"
+        >
+
+        <!-- first name -->
+          <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+            <div>
+              <label
+                for="first-name"
+                class="block text-sm/6 font-semibold text-gray-900"
+                >First name :</label
+              >
+              <div class="mt-2.5">
+                <input
+                  type="text"
+                  name="first-name"
+                  id="first-name"
+                  autocomplete="given-name"
+                  class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                />
+              </div>
+            </div>
+
+            <!-- last name -->
+            <div>
+              <label
+                for="last-name"
+                class="block text-sm/6 font-semibold text-gray-900"
+                >Last name :</label
+              >
+              <div class="mt-2.5">
+                <input
+                  type="text"
+                  name="last-name"
+                  id="last-name"
+                  autocomplete="family-name"
+                  class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                />
+              </div>
+            </div>
+
+            <!-- email -->
+            <div class="sm:col-span-2">
+              <label
+                for="email"
+                class="block text-sm/6 font-semibold text-gray-900"
+                >Email :</label
+              >
+              <div class="mt-2.5">
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  autocomplete="email"
+                  class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                />
+              </div>
+            </div>
+
+            <!-- category of enquiry -->
+            <div class="sm:col-span-2">
+              <label
+                for="category"
+                class="block text-sm/6 font-semibold text-gray-900"
+                >Category of Enquiry :</label
+              >
+              <div class="mt-2.5">
+                <select
+                  id="inquiry-type"
+                  name="inquiry-type"
+                  required
+                  class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                >
+                  <option value="ADMISSION">Admission (Student)</option>
+                  <option value="BECOME_TEACHER">Become a Teacher</option>
+                  <option value="GENERAL_QUERY">General Query</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- prefered contact method -->
+            <div class="sm:col-span-2">
+              <label
+                for="contact-method"
+                class="block text-sm/6 font-semibold text-gray-900"
+                >Preferred Contact Method :</label
+              >
+              <div class="mt-2.5">
+                <select
+                  id="contact-method"
+                  name="contact-method"
+                  class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                >
+                  <option value="EMAIL">Email</option>
+                  <option value="PHONE">Phone</option>
+                  <option value="BOTH">Both</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- phone num -->
+            <div class="sm:col-span-2">
+              <label
+                for="phone-number"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Phone number :</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none"
+                >
+                  <svg
+                    class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 19 18"
+                  >
+                    <path
+                      d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z"
+                    />
+                  </svg>
+                </div>
+                <div class="flex rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                  <input
+                  type="text"
+                  name="phone-number"
+                  id="phone-number"
+                  aria-describedby="helper-text-explanation"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                  placeholder="123-456-7890"
+                  required
+                />
+                </div>
+              </div>
+            </div>
+            
+            <!-- message -->
+            <div class="sm:col-span-2">
+              <label
+                for="message"
+                class="block text-sm/6 font-semibold text-gray-900"
+                >Message :</label
+              >
+              <div class="mt-2.5">
+                <textarea
+                  name="message"
+                  id="message"
+                  rows="4"
+                  class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit button -->
+          <div class="mt-10">
+            <button
+              type="submit"
+              class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Let's talk
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{./base/base :: parent(~{::#contactMessages}, ~{::#title})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="title">Admin Dashboard - Contact Messages</title>
+    <link rel="stylesheet" th:href="@{'/css/output.css'}" />
+  </head>
+  <body id="contactMessages" class="bg-gray-100">
+    <main class="p-6">
+      <div class="max-w-7xl mx-auto bg-white shadow-lg rounded-lg">
+        <div class="p-6 border-b border-gray-200 flex items-center">
+          <div>
+            <a
+              href="/"
+              type="button"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              <svg
+                class="w-4 h-4 text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="4"
+                  d="M5 12h14M5 12l4-4m-4 4 4 4"
+                />
+              </svg>
+
+              <span class="sr-only">Icon description</span>
+            </a>
+          </div>
+          <h1 class="text-2xl pb-2 font-bold mt-2">Contact Messages</h1>
+        </div>
+
+        <div>
+          <section>
+            <div
+              class="relative overflow-x-auto shadow-md sm:rounded-lg mx-5 my-5"
+            >
+              <table
+                class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+              >
+                <thead
+                  class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                >
+                  <tr>
+                    <th class="py-2 px-4 border-b">First Name</th>
+                    <th class="py-2 px-4 border-b">Last Name</th>
+                    <th class="py-2 px-4 border-b">Email</th>
+                    <th class="py-2 px-4 border-b">Phone</th>
+                    <th class="py-2 px-4 border-b">Message</th>
+                    <th class="py-2 px-4 border-b">Query Status</th>
+
+                    <th class="py-2 px-4 border-b">View All Details</th>
+                    <th class="py-2 px-4 border-b">Issue Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="message : ${messages}">
+                    <td
+                      class="py-2 px-4 border-b"
+                      th:text="${message.firstName}"
+                    ></td>
+                    <td
+                      class="py-2 px-4 border-b"
+                      th:text="${message.lastName}"
+                    ></td>
+                    <td
+                      class="py-2 px-4 border-b"
+                      th:text="${message.email}"
+                    ></td>
+                    <td
+                      class="py-2 px-4 border-b"
+                      th:text="${message.phoneNumber}"
+                    ></td>
+                    <td
+                      class="py-2 px-4 border-b"
+                      th:text="${message.message}"
+                    ></td>
+                    <td
+                      class="py-2 px-4 border-b"
+                      th:text="${message.replied ? 'Resolved' : 'Pending'}"
+                    ></td>
+
+                    <td class="py-2 px-4 border-b">
+                      <a
+                        th:href="@{/contact/messages/{id}(id=${message.id})}"
+                        class="text-blue-500 hover:text-blue-700"
+                        >View</a
+                      >
+                    </td>
+                    <td class="py-2 px-4 border-b">
+                      <form
+                        th:action="@{/contact/messages/{id}/resolve(id=${message.id})}"
+                        method="post"
+                        th:if="${!message.replied}"
+                      >
+                        <button
+                          type="submit"
+                          class="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600"
+                        >
+                          Resolve
+                        </button>
+                      </form>
+                      <div class="flex items-center gap-2">
+                        <span th:if="${message.replied}" class="text-green-500"
+                          ><svg
+                            class="w-6 h-6 text-gray-800 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M5 11.917 9.724 16.5 19 7.5"
+                            />
+                          </svg>
+                        </span>
+                        <button
+                          type="button"
+                          th:if="${message.replied}"
+                          class="text-red-700 text-lg"
+                          th:onclick="|openModal(${message.id})|"
+                        >
+                          𐤕
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr th:if="${messages.empty}">
+                    <td class="text-2xl text-center py-4" colspan="10">
+                      Enquiry messages not found!
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Modal for confirmation -->
+              <div
+                id="confirmationModal"
+                class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center hidden"
+              >
+                <div class="bg-white rounded-lg p-6 w-1/3">
+                  <h2 class="text-xl font-bold mb-4">Confirm Deletion</h2>
+                  <p class="mb-4">Please select one of the options below:</p>
+                  <div class="mb-4">
+                    <label class="block">
+                      <input
+                        type="checkbox"
+                        id="removeFromDashboard"
+                        class="mr-2"
+                      />
+                      Remove query from dashboard
+                    </label>
+                    <label class="block">
+                      <input
+                        type="checkbox"
+                        id="removeFromDatabase"
+                        class="mr-2"
+                      />
+                      Remove from both dashboard and database.
+                    </label>
+                  </div>
+                  <div class="flex justify-end">
+                    <button
+                      id="confirmRemoveFromDashboard"
+                      class="bg-blue-500 text-white py-2 px-4 rounded-md mr-2"
+                    >
+                      OK
+                    </button>
+                    <button
+                      class="bg-gray-300 text-black py-2 px-4 rounded-md"
+                      onclick="closeModal()"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Success Modal for feedback -->
+              <div
+                id="successModal"
+                class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center hidden"
+              >
+                <div class="bg-white rounded-lg p-6 w-1/3">
+                  <h2 class="text-xl font-bold mb-4" id="successMessage"></h2>
+                  <div class="flex justify-end">
+                    <button
+                      class="bg-blue-500 text-white py-2 px-4 rounded-md"
+                      onclick="closeSuccessModal()"
+                    >
+                      OK
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Function to show modal
+      function openModal(messageId) {
+        const modal = document.getElementById("confirmationModal");
+        modal.classList.remove("hidden");
+
+        document.getElementById("confirmRemoveFromDashboard").onclick =
+          function () {
+            handleConfirmation(messageId);
+          };
+      }
+
+      // Function to hide the confirmation modal
+      function closeModal() {
+        const modal = document.getElementById("confirmationModal");
+        modal.classList.add("hidden");
+      }
+
+      // Function to handle confirmation based on options selected
+      function handleConfirmation(messageId) {
+        const removeFromDashboard = document.getElementById(
+          "removeFromDashboard"
+        ).checked;
+        const removeFromDatabase =
+          document.getElementById("removeFromDatabase").checked;
+
+        if (removeFromDashboard) {
+          removeFromDashboardRequest(messageId);
+        }
+
+        if (removeFromDatabase) {
+          deleteFromDatabaseRequest(messageId);
+        }
+
+        closeModal(); // Close the modal after selection
+      }
+
+      // Function to remove query from dashboard
+      function removeFromDashboardRequest(messageId) {
+        fetch(`/contact/messages/${messageId}/removeFromDashboard`, {
+          method: "POST",
+        }).then((response) => {
+          if (response.ok) {
+            showSuccessModal("Query removed from the dashboard.");
+          } else {
+            showErrorModal("An error occurred. Please try again.");
+          }
+        });
+      }
+
+      // Function to remove query from database
+      function deleteFromDatabaseRequest(messageId) {
+        fetch(`/contact/messages/${messageId}/delete`, {
+          method: "POST",
+        }).then((response) => {
+          if (response.ok) {
+            showSuccessModal("Query deleted from the database and dashboard.");
+          } else {
+            showErrorModal("An error occurred. Please try again.");
+          }
+        });
+      }
+
+      // Function to show the success modal
+      function showSuccessModal(message) {
+        const successModal = document.getElementById("successModal");
+        const successMessage = document.getElementById("successMessage");
+        successMessage.textContent = message;
+        successModal.classList.remove("hidden");
+      }
+
+      // Function to close the success modal
+      function closeSuccessModal() {
+        const successModal = document.getElementById("successModal");
+        successModal.classList.add("hidden");
+        location.reload(); // Reload the page to reflect changes
+      }
+
+      // Function to show an error modal (similar to success modal but with error messages)
+      function showErrorModal(message) {
+        showSuccessModal(message); // You can customize it further if needed
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Sign-in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{'/css/output.css'}" />
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+      }
+
+      /* Add smooth transitions */
+      input,
+      button {
+        transition: all 0.3s ease;
+      }
+
+      /* Improve focus styles */
+      input:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.7);
+        border-color: rgba(59, 130, 246, 1);
+      }
+
+      /* Add spacing between input fields for better readability */
+      .space-y-4 > *:not(:last-child) {
+        margin-bottom: 16px;
+      }
+
+      /* Make the layout more compact on smaller devices */
+      @media (max-width: 768px) {
+        .flex-col {
+          padding: 20px;
+        }
+        .sm\:max-w-md {
+          width: 100%;
+        }
+      }
+
+      /* Improve button hover effects */
+      button:hover {
+        background-color: #2563eb; /* Adjust hover color */
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="bg-gray-50 dark:bg-gray-900">
+      <div
+        class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+      >
+        <a
+          href="#"
+          class="flex items-center gap-2 mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+        >
+          <div>
+            <svg
+              class="w-6 h-6 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4 4a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2v14a1 1 0 1 1 0 2H5a1 1 0 1 1 0-2V5a1 1 0 0 1-1-1Zm5 2a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H9Zm5 0a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1Zm-5 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H9Zm5 0a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1h-1Zm-3 4a2 2 0 0 0-2 2v3h2v-3h2v3h2v-3a2 2 0 0 0-2-2h-2Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+          <div>
+            [School Name]
+          </div>
+        </a>
+        <div
+          class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+        >
+          <div class="p-6 space-y-4 sm:p-8">
+            <h1
+              class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+            >
+              Sign in to your account
+            </h1>
+            <form
+              class="space-y-4"
+              th:action="@{/authenticate}"
+              method="post"
+              th:object="${user}"
+            >
+              <div>
+                <label
+                  for="email"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Your email</label
+                >
+                <input
+                  type="email"
+                  th:field="*{email}"
+                  name="email"
+                  id="email"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="name@company.com"
+                  aria-required="true"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="password"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  th:field="*{password}"
+                  name="password"
+                  id="password"
+                  placeholder="••••••••"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  aria-required="true"
+                  required
+                />
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-start">
+                  <div class="flex items-center h-5">
+                    <input
+                      id="remember"
+                      aria-describedby="remember"
+                      type="checkbox"
+                      class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                    />
+                  </div>
+                  <div class="ml-3 text-sm">
+                    <label
+                      for="remember"
+                      class="text-gray-500 dark:text-gray-300"
+                      >Remember me</label
+                    >
+                  </div>
+                </div>
+                <a
+                  href="#"
+                  class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  >Forgot password?</a
+                >
+              </div>
+              <button
+                type="submit"
+                class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Sign in
+              </button>
+              <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                Don’t have an account yet?
+                <a
+                  href="/contact"
+                  class="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  >Contact Now</a
+                >
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

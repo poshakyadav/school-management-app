@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Grade</title>
+</head>
+<body>
+    <h2 th:text="${grade.id == null ? 'Add' : 'Edit'} + ' Grade'"></h2>
+    <form th:action="@{/grades/add}" th:object="${grade}" method="post">
+        <label>Student:</label>
+        <select th:field="*{student}" required>
+            <option th:each="student : ${students}" th:value="${student}" th:text="${student.name}"></option>
+        </select>
+        <label>Course:</label>
+        <select th:field="*{course}" required>
+            <option th:each="course : ${courses}" th:value="${course}" th:text="${course.name}"></option>
+        </select>
+        <label>Grade:</label>
+        <input type="text" th:field="*{grade}" required />
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

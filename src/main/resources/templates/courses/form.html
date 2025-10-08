@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Course</title>
+</head>
+<body>
+    <h1>Add and Edit cources</h1>
+    <form th:action="@{/courses/add}" 
+    th:object="${course}"
+    method="post">
+        <input type="text" name="code" th:field="*{id}" placeholder="Course Code" hidden>
+        <input type="text" name="name" th:field="*{name}" placeholder="Course Name" required>
+        <div>
+            <label for="teacher">Select Course Teacher:</label>
+            <select id="teacher" th:field="*{teacher}">
+                <option th:each="teacher : ${teacher}" th:value="${teacher.id}" th:text="${teacher.name}" ></option>
+            </select>
+        </div>
+        <textarea name="" id=""  th:field="*{description}" placeholder="Course Description"></textarea>
+        
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

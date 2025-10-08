@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Fee</title>
+</head>
+<body>
+    <h2 th:if="${fee.id == null}">Add Fee</h2>
+    <h2 th:if="${fee.id != null}">Edit Fee</h2>
+    <form th:action="@{/fees/add}" method="post" th:object="${fee}">
+        <input type="hidden" th:field="*{id}">
+        
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" th:field="*{amount}" placeholder="Amount" required><br>
+
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" th:field="*{dueDate}" required><br>
+
+        <label for="status">Status:</label>
+        <select id="status" th:field="*{status}" required>
+            <option value="unpaid" th:selected="*{status == 'unpaid'}">Unpaid</option>
+            <option value="paid" th:selected="*{status == 'paid'}">Paid</option>
+        </select><br>
+
+        <input type="hidden" name="studentId" th:value="${studentId}">
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

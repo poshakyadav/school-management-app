@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.spring.st</groupId>
-	<artifactId>student-management</artifactId>
+	<artifactId>school-management</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>student-management</name>
+	<name>school-management</name>
 	<description>Spring Boot School Management Project</description>
 	<url />
 	<licenses>
